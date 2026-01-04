@@ -192,7 +192,7 @@ This repository contains working implementations of:
 
 ## Production Validation
 
-SELF App (first constellation) has been live since January 1, 2026:
+SELF App (first constellation - https://self.app) has been live since January 1, 2026:
 
 | Metric | Value |
 |--------|-------|
@@ -239,7 +239,7 @@ Cryptographic audit is in progress. Preliminary results and methodology availabl
 
 Interested in launching a constellation?
 
-**Contact:** [constellation@self.technology](mailto:constellation@self.technology)
+**Contact:** [info@self.chain](mailto:info@self.chain)
 
 We provide:
 - Full technology licensing
@@ -251,4 +251,4 @@ We provide:
 
 **Patent-pending technology.** See [proofofai.com](https://proofofai.com) for the public PoAI specification.
 
-*© 2026 SELF Technology. All rights reserved.*
+*© 2026 SELF Technology Ltd. All rights reserved.*
