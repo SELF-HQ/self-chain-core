@@ -6,7 +6,16 @@
 //!
 //! SELF Chain implements the patent-pending Proof-of-AI consensus mechanism,
 //! replacing computational waste (PoW) and wealth concentration (PoS) with
-//! AI-powered validation.
+//! efficient, democratic validation.
+//!
+//! **Production Status:** Live since January 1, 2026 (SELF App constellation)
+//!
+//! **Key Features:**
+//! - Browser-based validators (keys never leave device)
+//! - Color marker validation (lightweight cryptographic verification)
+//! - 20/20/50/10 transaction selection (fair block building)
+//! - Delegated keys (master + validator key separation)
+//! - Hybrid cryptography (classic + post-quantum ready)
 //!
 //! ## Key Components
 //!

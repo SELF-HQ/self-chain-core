@@ -1,10 +1,12 @@
-# SELF Chain
+# SELF Chain Core
 
-### Your AI-Powered Sovereign Blockchain
+### Production-Proven Proof-of-AI Consensus
 
 > Launch your own Layer-1 blockchain with Proof-of-AI consensus, quantum-resistant security, and enterprise-grade infrastructure.
 
-SELF Chain is an AI-native blockchain implementing the patent-pending Proof-of-AI consensus mechanism. This repository demonstrates the core technology powering SELF Chain constellations.
+SELF Chain is an AI-native blockchain implementing the patent-pending Proof-of-AI consensus mechanism. This repository contains the core technology powering SELF Chain constellations.
+
+**Status:** Production-proven — SELF App (first constellation) has been live since January 1, 2026 with real users validating blocks from their browsers.
 
 ---
 
@@ -17,7 +19,7 @@ A **Constellation** is a licensed deployment of SELF Chain technology, customize
 - **Your users** — Browser-based validators mean zero infrastructure per user
 - **Our consensus** — Battle-tested PoAI core, production-proven
 
-SELF App is the first constellation, live in production with real users since January 2026.
+**SELF App** is the first constellation, live in production at `https://self.app` since January 1, 2026, demonstrating PoAI consensus at scale with browser-based validators.
 
 ---
 
@@ -25,19 +27,20 @@ SELF App is the first constellation, live in production with real users since Ja
 
 ### Proof-of-AI Consensus
 
-PoAI replaces computational waste (PoW) and wealth concentration (PoS) with AI-powered validation:
+PoAI replaces computational waste (PoW) and wealth concentration (PoS) with efficient, democratic validation:
 
 | Node Type | Role | Footprint |
 |-----------|------|-----------|
-| **Validator** | Vote on blocks, validate color markers | Browser-based, ~256MB |
-| **Block Builder** | Assemble blocks, compete on efficiency | Server, ~2GB |
-| **Coordinator** | Organize rounds, generate reference blocks | Managed service |
+| **Validator** | Vote on blocks, validate color markers | Browser-based, ~256MB RAM |
+| **Block Builder** | Assemble blocks, compete on efficiency | Server, ~2GB RAM |
+| **Coordinator** | Organize rounds, generate reference blocks | Managed service (WebSocket) |
 
 **Key differentiators:**
-- Validators run in user browsers — no per-user infrastructure costs
-- Scales to millions of users with fixed infrastructure
-- Sub-minute consensus rounds
-- AI-assisted anomaly detection and block validation
+- **Browser-based validators** — Keys never leave user's device (zero-knowledge architecture)
+- **Zero per-user infrastructure** — Scales to millions with fixed coordination layer
+- **60-second consensus rounds** — Fast finality, browser-friendly timing
+- **Color marker validation** — Lightweight cryptographic validation (~10MB storage per validator)
+- **Production-proven** — Live since January 2026 with real users
 
 ### Transaction Selection (20/20/50/10)
 
@@ -163,6 +166,7 @@ src/
 
 | Document | Description |
 |----------|-------------|
+| **[Getting Started](docs/GETTING_STARTED.md)** | Developer guide: setup, examples, integration checklist |
 | **[Constellation Overview](docs/CONSTELLATION_OVERVIEW.md)** | Configuration options, performance data, integration model, what we provide |
 | **[PoAI Specification](docs/POAI_SPECIFICATION.md)** | Complete consensus mechanism specification |
 
@@ -200,16 +204,69 @@ SELF App (first constellation - https://self.app) has been live since January 1,
 | **Consensus** | 1 round per minute, continuous |
 | **Validators** | Browser-based, real users |
 | **Key Architecture** | Zero-knowledge (keys never leave device) |
-| **Reward Mechanism** | Prize pool (custom implementation) |
+| **Reward Mechanism** | Prize pool (daily/weekly/monthly drawings) |
+| **Infrastructure** | Coordinator + Orchestrator on Fly.io (Amsterdam) |
+| **AI Oracle** | vLLM on H100 GPU (RunPod) for transaction selection |
+
+**Production Endpoints:**
+- Coordinator: ``
+- Orchestrator: ``
 
 ---
 
 ## Security
 
-- **Cryptographic Audit**: In progress with third-party security firm
+**This is NOT an open-source project.** This repository contains core PoAI consensus technology for evaluation by prospective constellation clients.
+
+**Security Properties:**
 - **Quantum-Resistant**: Hybrid cryptography with Kyber-1024 and SPHINCS+
 - **Key Isolation**: Master keys never leave user devices
-- **Threat Model**: Available under NDA for serious evaluators
+- **Zero-Knowledge Architecture**: Validator keys held in browser memory only
+- **Production-Proven**: Live in production since January 2026
+
+**Not Included** (proprietary to SELF Technology):
+- AI validation rules and thresholds
+- Pattern analysis algorithms  
+- Production coordinator implementation details
+- Infrastructure automation and deployment configs
+
+**Threat Model**: Available under NDA for serious evaluators considering constellation deployment.
+
+---
+
+## Getting Started
+
+### For Developers (Evaluation Only)
+
+**⚠️ This repository is for EVALUATION ONLY. You cannot deploy a constellation without proper licensing from SELF Technology.**
+
+This repository contains working implementations of core PoAI mechanisms for technical evaluation:
+
+```bash
+# Clone the repository
+git clone https://github.com/self-technology/self-chain-core.git
+cd self-chain-core
+
+# Build the project
+cargo build
+
+# Run tests
+cargo test
+
+# Run examples
+cargo run --example custom_rewards
+```
+
+**Key Components:**
+- `src/consensus/` — PoAI consensus (transaction selection, color markers, voting)
+- `src/crypto/` — Hybrid cryptography (classic + post-quantum)
+- `src/blockchain/` — Core blockchain types (Block, Transaction)
+- `src/node/` — Node type implementations (Validator, Builder, Coordinator)
+- `examples/` — Reference implementations for custom reward mechanisms
+
+See the [Getting Started Guide](docs/GETTING_STARTED.md) for evaluation instructions and the [Constellation Overview](docs/CONSTELLATION_OVERVIEW.md) for integration details.
+
+**For constellation deployment:** Contact [constellation@self.technology](mailto:constellation@self.technology) for licensing and deployment support.
 
 ---
 
@@ -227,11 +284,11 @@ Timeline depends entirely on your specification — from weeks for standard conf
 
 **Can we see a demo?**
 
-Yes. Contact us for a technical demonstration and deep-dive with our engineering team.
+Yes. Contact us for a technical demonstration and deep-dive with our engineering team. SELF App is live at https://self.app — you can see PoAI consensus in action.
 
 **Has this been audited?**
 
-Cryptographic audit is in progress. Preliminary results and methodology available under NDA.
+Cryptographic audit is in progress. Preliminary results and methodology available under NDA. Production deployment demonstrates real-world security and reliability.
 
 ---
 

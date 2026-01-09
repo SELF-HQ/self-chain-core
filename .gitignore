@@ -1,0 +1,14 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+
+# Build artifacts
+/target/
+**/*.rs.bk
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo

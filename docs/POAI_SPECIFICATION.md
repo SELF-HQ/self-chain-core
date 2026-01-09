@@ -123,12 +123,77 @@ The reward for participation is generated as a native coin, earned by helping to
 8% is distributed among the AI validators who voted for the winning block builder;
 1% goes to the AI validator, who double-checked the block (according to the color scheme);
 1% of the reward goes to PoAI mechanisms (credited to the blockchain's reserve fund) for organizing the voting procedure.
+
 These percentages can be revised to reflect each consensus participant's labor costs and contribution to its implementation. The example above is illustrated below:
 
 ---
 
-**Note for SELF Chain:** This document describes the original PoAI specification reward distribution (90/8/1/1). However, **SELF Chain uses a prize pool system instead** of per-round blockchain rewards. In SELF Chain:
+## Implementation Notes for SELF Chain
+
+**Production Implementation (SELF App, January 2026):**
+
+This repository implements the core PoAI consensus mechanisms as specified above. However, **SELF Chain constellations can customize reward mechanisms** to fit their use case.
+
+**SELF App (First Constellation) uses a Prize Pool System:**
 - Each validator vote creates a prize draw entry (1 vote = 1 entry)
 - Winners are selected via daily/weekly/monthly prize drawings (5k/50k/200k SELF)
 - No per-round blockchain rewards are distributed
-- This provides better incentives and user experience compared to the negligible per-round rewards
+- This provides better incentives and user experience compared to negligible per-round rewards
+- Prize draws are cryptographically verifiable (SHA256-based selection)
+
+**Default PoAI Distribution (90/8/1/1) is also available:**
+- 90% to block builder
+- 8% split among voters who voted for winning block
+- 1% to color marker validator
+- 1% to network reserve
+
+Constellations implement their own reward mechanisms via the `RewardDistributor` trait (see `examples/custom_rewards.rs`).
+
+**Browser-Based Validators:**
+- SELF Chain implements browser-based validators (not server-based)
+- Validator keys derived from recovery phrase (BIP32 `m/44'/60'/1'/0/0`)
+- Keys held in browser memory only (never transmitted)
+- WebSocket connection to coordinator for voting
+- Zero-knowledge architecture preserves user sovereignty
+
+**Production Status:**
+- Live since January 1, 2026
+- Coordinator: ``
+- 60-second consensus rounds
+- Browser-based validators with real users
+
+---
+
+## Implementation Notes for SELF Chain
+
+**Production Implementation (SELF App, January 2026):**
+
+This repository implements the core PoAI consensus mechanisms as specified above. However, **SELF Chain constellations can customize reward mechanisms** to fit their use case.
+
+**SELF App (First Constellation) uses a Prize Pool System:**
+- Each validator vote creates a prize draw entry (1 vote = 1 entry)
+- Winners are selected via daily/weekly/monthly prize drawings (5k/50k/200k SELF)
+- No per-round blockchain rewards are distributed
+- This provides better incentives and user experience compared to negligible per-round rewards
+- Prize draws are cryptographically verifiable (SHA256-based selection)
+
+**Default PoAI Distribution (90/8/1/1) is also available:**
+- 90% to block builder
+- 8% split among voters who voted for winning block
+- 1% to color marker validator
+- 1% to network reserve
+
+Constellations implement their own reward mechanisms via the `RewardDistributor` trait (see `examples/custom_rewards.rs`).
+
+**Browser-Based Validators:**
+- SELF Chain implements browser-based validators (not server-based)
+- Validator keys derived from recovery phrase (BIP32 `m/44'/60'/1'/0/0`)
+- Keys held in browser memory only (never transmitted)
+- WebSocket connection to coordinator for voting
+- Zero-knowledge architecture preserves user sovereignty
+
+**Production Status:**
+- Live since January 1, 2026
+- Coordinator: ``
+- 60-second consensus rounds
+- Browser-based validators with real users

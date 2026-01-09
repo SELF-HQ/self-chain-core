@@ -127,13 +127,16 @@ Based on SELF App production data (January 2026):
 
 ### User Experience
 
+Based on SELF App production data (January 2026):
+
 | Operation | Latency | Notes |
 |-----------|---------|-------|
+| **WebSocket Connection** | <200ms | Browser → Coordinator (Amsterdam) |
 | **Vote Submission** | <100ms | Browser → Coordinator |
 | **Vote Confirmation** | <500ms | Acknowledgment returned |
 | **Round Finality** | 60 seconds | Configurable 30s–5min |
 
-Users experience near-instant feedback. The 60-second round time is what enables browser-based participation — shorter rounds would require always-on infrastructure.
+Users experience near-instant feedback. The 60-second round time enables browser-based participation — shorter rounds would require always-on infrastructure. The WebSocket connection remains open while the app is active, allowing automatic voting without user interaction.
 
 ### Scaling Economics
 
@@ -157,24 +160,28 @@ The coordination layer (proposal broadcasting, vote collection) is lightweight. 
 
 ### Coordination Layer Scaling
 
-| Validators | Coordination Layer | Est. Cost/Month |
-|------------|-------------------|-----------------|
-| 1,000 | 1 coordinator | ~$50 |
-| 10,000 | 1 coordinator | ~$100 |
-| 100,000 | 2 coordinators + LB | ~$300 |
-| 1,000,000 | 3 coordinators + LB | ~$1,000 |
+**Production Data (SELF App, January 2026):**
 
-The coordination layer handles:
-- Broadcasting proposals to connected validators
-- Collecting signed votes
-- Tracking participation (public data only)
+| Validators | Coordination Layer | Est. Cost/Month | Notes |
+|------------|-------------------|-----------------|-------|
+| 1,000 | 1 coordinator | ~$50 | Single Fly.io machine (Amsterdam) |
+| 10,000 | 1 coordinator | ~$100 | Single machine handles 10k WebSocket connections |
+| 100,000 | 2 coordinators + LB | ~$300 | Load balancer + 2 machines |
+| 1,000,000 | 3 coordinators + LB | ~$1,000 | Horizontal scaling with load balancer |
 
-**It does not:**
-- Hold or access private keys
+**What the coordination layer does:**
+- Broadcasts proposals to connected validators via WebSocket
+- Collects signed votes (Ed25519 signatures)
+- Tracks participation time (public data only)
+- Reports uptime sessions to orchestrator (for reward mechanisms)
+
+**What it does NOT do:**
+- Hold or access private keys (keys stay in browser)
 - Sign transactions on behalf of users
 - Store sensitive user data
+- Influence voting results (votes are cryptographically signed)
 
-**Not included above:** Your application infrastructure (auth, UI, APIs) — that's yours to build.
+**Not included above:** Your application infrastructure (auth, UI, APIs, database) — that's yours to build. The coordinator is just the consensus coordination layer.
 
 ---
 
@@ -216,35 +223,55 @@ The coordination layer handles:
 
 ### Key Generation (Client-Side)
 
-Your app derives keys from user recovery phrase:
+Your app derives keys from user recovery phrase using BIP32 derivation:
 
 ```
 Recovery Phrase (12/24 words)
         │
         ▼ BIP39
-   Master Seed
+   Master Seed (512 bits)
         │
         ├─► Wallet Key (m/44'/60'/0'/0/0)  → Funds control
+        │   └─► Ed25519 keypair for transactions
         │
         └─► Validator Key (m/44'/60'/1'/0/0) → Voting
                     │
-                    └─► Never transmitted. Signs locally.
+                    └─► Ed25519 keypair for block voting
+                    └─► Never transmitted. Signs locally in browser.
+                    └─► Cannot move funds (separate derivation path)
 ```
+
+**Security Properties:**
+- Validator keys are derived deterministically from recovery phrase
+- Keys are held in browser memory only (never persisted to disk)
+- If user closes browser, keys are cleared from memory
+- User can revoke validator by changing recovery phrase
+- Master key controls funds; validator key only votes
 
 ### Validator Connection Flow
 
+**Production Implementation (SELF App):**
+
 ```
-1. User opens your app
-2. App derives validator keypair (client-side)
-3. App connects WebSocket to coordinator
-4. Coordinator sends challenge
-5. App signs challenge with validator key
-6. Coordinator verifies → authenticated
-7. App receives proposals, submits signed votes
-8. Coordinator tracks participation
+1. User opens your app (e.g., https://your-app.com)
+2. User logs in (recovery phrase → master seed)
+3. App derives validator keypair client-side (BIP32 m/44'/60'/1'/0/0)
+4. App connects WebSocket to coordinator (wss://coordinator.your-domain.com/ws/validator)
+5. Coordinator sends authentication challenge (random nonce)
+6. App signs challenge with validator key (Ed25519)
+7. Coordinator verifies signature → authenticated
+8. Coordinator broadcasts proposals every 60 seconds
+9. App automatically signs and submits votes for each proposal
+10. Coordinator tracks participation time (for your reward mechanism)
+11. When user closes app, WebSocket disconnects (keys cleared from memory)
 ```
 
-All cryptography happens in the browser. Keys never leave the device.
+**Key Features:**
+- All cryptography happens in the browser (Web Crypto API or WASM)
+- Keys never leave the device (zero-knowledge preserved)
+- Automatic voting (no user interaction required)
+- Participation tracking (1 minute connected = 1 entry, or your custom metric)
+- Graceful disconnection (keys cleared when browser closes)
 
 ---
 
