@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="SELF Chain Star Logo White.png" height="80" alt="SELF Chain">
+  <img src="SELF Chain Star Logo White.png" height="120" alt="SELF Chain">
 </p>
 
 <h1 align="center">SELF Chain</h1>
