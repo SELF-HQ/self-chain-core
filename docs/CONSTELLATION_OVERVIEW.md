@@ -10,19 +10,17 @@ This document outlines what's configurable, what's managed, and what you get whe
 
 A constellation is your own blockchain network powered by PoAI consensus:
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    YOUR CONSTELLATION                            │
-│                                                                  │
-│   Your Brand  ·  Your Token  ·  Your Economics  ·  Your Users   │
-│                                                                  │
-│   ┌─────────────────────────────────────────────────────────┐   │
-│   │              PoAI Consensus Core (Licensed)              │   │
-│   └─────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│   Managed by SELF Technology  ·  Battle-tested  ·  Scalable     │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph YOUR_CONSTELLATION["YOUR CONSTELLATION"]
+        direction TB
+        YourLayer["Your Brand · Your Token · Your Economics · Your Users"]
+        subgraph PoAI["PoAI Consensus Core (Licensed)"]
+        end
+        ManagedLayer["Managed by SELF Technology · Battle-tested · Scalable"]
+        YourLayer --- PoAI
+        PoAI --- ManagedLayer
+    end
 ```
 
 You control the user experience. We provide the consensus infrastructure.
@@ -189,56 +187,46 @@ The coordination layer (proposal broadcasting, vote collection) is lightweight. 
 
 ### Your Application ↔ SELF Chain
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      YOUR APPLICATION                            │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│   ┌──────────────┐    ┌──────────────┐    ┌──────────────┐      │
-│   │   Your UI    │    │  Your API    │    │ Your Users   │      │
-│   └──────┬───────┘    └──────┬───────┘    └──────┬───────┘      │
-│          │                   │                   │               │
-└──────────┼───────────────────┼───────────────────┼───────────────┘
-           │                   │                   │
-           ▼                   ▼                   ▼
-┌──────────────────────────────────────────────────────────────────┐
-│                      INTEGRATION LAYER                           │
-├──────────────────────────────────────────────────────────────────┤
-│                                                                   │
-│   WebSocket (Validators)     REST API (Queries)     SDK          │
-│   ├─ Connect/auth            ├─ Balances            ├─ JS/TS     │
-│   ├─ Receive proposals       ├─ History             ├─ Rust      │
-│   ├─ Submit votes            ├─ Status              └─ (others)  │
-│   └─ Participation tracking  └─ Rewards                          │
-│                                                                   │
-└───────────────────────────────┬──────────────────────────────────┘
-                                │
-                                ▼
-┌──────────────────────────────────────────────────────────────────┐
-│                    SELF CHAIN (Managed)                          │
-├──────────────────────────────────────────────────────────────────┤
-│   Coordinator  ·  Consensus  ·  AI Oracle  ·  Block Production   │
-└──────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph YOUR_APP["YOUR APPLICATION"]
+        UI["Your UI"]
+        API["Your API"]
+        Users["Your Users"]
+    end
+    
+    subgraph INTEGRATION["INTEGRATION LAYER"]
+        WS["WebSocket (Validators)<br/>Connect/auth · Proposals · Votes"]
+        REST["REST API (Queries)<br/>Balances · History · Status"]
+        SDK["SDK<br/>JS/TS · Rust"]
+    end
+    
+    subgraph SELF_CHAIN["SELF CHAIN (Managed)"]
+        Core["Coordinator · Consensus · AI Oracle · Block Production"]
+    end
+    
+    UI --> WS
+    API --> REST
+    Users --> SDK
+    WS --> Core
+    REST --> Core
+    SDK --> Core
 ```
 
 ### Key Generation (Client-Side)
 
 Your app derives keys from user recovery phrase using BIP32 derivation:
 
-```
-Recovery Phrase (12/24 words)
-        │
-        ▼ BIP39
-   Master Seed (512 bits)
-        │
-        ├─► Wallet Key (m/44'/60'/0'/0/0)  → Funds control
-        │   └─► Ed25519 keypair for transactions
-        │
-        └─► Validator Key (m/44'/60'/1'/0/0) → Voting
-                    │
-                    └─► Ed25519 keypair for block voting
-                    └─► Never transmitted. Signs locally in browser.
-                    └─► Cannot move funds (separate derivation path)
+```mermaid
+flowchart TB
+    RP["Recovery Phrase (12/24 words)"]
+    RP -->|BIP39| MS["Master Seed (512 bits)"]
+    
+    MS --> WK["Wallet Key (m/44'/60'/0'/0/0)"]
+    MS --> VK["Validator Key (m/44'/60'/1'/0/0)"]
+    
+    WK --> WKD["Ed25519 keypair for transactions<br/>→ Funds control"]
+    VK --> VKD["Ed25519 keypair for block voting<br/>→ Voting only<br/>→ Signs locally in browser<br/>→ Cannot move funds"]
 ```
 
 **Security Properties:**

@@ -171,35 +171,33 @@ export function deriveValidatorKeysFromSeed(seed: Uint8Array): ValidatorKeyPair 
 
 ### Connection Flow
 
-```
-Browser                                      Coordinator
-   │                                              │
-   │────── WebSocket Connect ────────────────────►│
-   │                                              │
-   │◄───── Welcome { challenge: timestamp } ──────│
-   │                                              │
-   │  [Browser signs challenge with Ed25519]      │
-   │                                              │
-   │────── Auth { public_key, signature } ───────►│
-   │                                              │
-   │  [Coordinator verifies Ed25519 signature]    │
-   │                                              │
-   │◄───── AuthResult { success: true } ──────────│
-   │                                              │
-   │            [60-second voting round]          │
-   │                                              │
-   │◄───── Proposal { round_id, block_hash } ─────│
-   │                                              │
-   │  [Browser signs vote with Ed25519]           │
-   │                                              │
-   │────── Vote { round_id, block_hash, sig } ───►│
-   │                                              │
-   │◄───── VoteAck { accepted: true } ────────────│
-   │                                              │
-   │         [Repeat every 60 seconds]            │
-   │                                              │
-   │◄───── Ping/Pong (keepalive) ────────────────►│
-   │                                              │
+```mermaid
+sequenceDiagram
+    participant B as Browser
+    participant C as Coordinator
+    
+    B->>C: WebSocket Connect
+    C->>B: Welcome { challenge: timestamp }
+    
+    Note over B: Signs challenge with Ed25519
+    
+    B->>C: Auth { public_key, signature }
+    
+    Note over C: Verifies Ed25519 signature
+    
+    C->>B: AuthResult { success: true }
+    
+    rect rgb(240, 248, 255)
+        Note over B,C: 60-second voting round
+        C->>B: Proposal { round_id, block_hash }
+        Note over B: Signs vote with Ed25519
+        B->>C: Vote { round_id, block_hash, sig }
+        C->>B: VoteAck { accepted: true }
+    end
+    
+    Note over B,C: Repeat every 60 seconds
+    
+    B-->>C: Ping/Pong (keepalive)
 ```
 
 ### Message Types

@@ -218,30 +218,27 @@ PoAI uses a **multi-builder competition model** where all eligible builders comp
 
 ### Round Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      PoAIRoundManager                           │
-│  - Manages round state machine                                  │
-│  - Handles proposal collection from ALL builders                │
-│  - Coordinates voting for BEST proposal                         │
-└─────────────────────────────────────────────────────────────────┘
-                             │
-         ┌───────────────────┼───────────────────┐
-         ▼                   ▼                   ▼
-┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
-│ ReferenceBlock  │ │ProposalCollector│ │EfficiencyValid. │
-│ - 20/20/50/10   │ │ - Multi-proposal│ │ - Score verify  │
-│ - Baseline      │ │ - Ranked list   │ │ - Selection OK  │
-└─────────────────┘ └─────────────────┘ └─────────────────┘
-         │                   │                   │
-         └───────────────────┼───────────────────┘
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     Ranked Voting                               │
-│  - Validators vote for BEST proposal (by efficiency)            │
-│  - Ed25519 signature verification                               │
-│  - 2/3+ votes required for finalization                         │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph Manager["PoAIRoundManager"]
+        M1["Manages round state machine"]
+        M2["Handles proposal collection from ALL builders"]
+        M3["Coordinates voting for BEST proposal"]
+    end
+    
+    Manager --> RB["ReferenceBlock<br/>20/20/50/10 · Baseline"]
+    Manager --> PC["ProposalCollector<br/>Multi-proposal · Ranked list"]
+    Manager --> EV["EfficiencyValidator<br/>Score verify · Selection OK"]
+    
+    RB --> Voting
+    PC --> Voting
+    EV --> Voting
+    
+    subgraph Voting["Ranked Voting"]
+        V1["Validators vote for BEST proposal (by efficiency)"]
+        V2["Ed25519 signature verification"]
+        V3["2/3+ votes required for finalization"]
+    end
 ```
 
 ### Round Phases

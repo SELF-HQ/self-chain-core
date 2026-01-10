@@ -114,27 +114,24 @@ For full configuration options, performance data, and integration details, see *
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        CONSTELLATION                             │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│   ┌──────────────────┐              ┌──────────────────┐        │
-│   │   User Browsers  │◄────────────►│   Coordinator    │        │
-│   │   (Validators)   │  WebSocket   │    (Managed)     │        │
-│   └──────────────────┘              └────────┬─────────┘        │
-│            │                                 │                   │
-│            │ Vote                            │ Proposals         │
-│            ▼                                 ▼                   │
-│   ┌──────────────────────────────────────────────────────┐      │
-│   │                    PoAI Core                          │      │
-│   │  ┌────────────┐  ┌────────────┐  ┌────────────────┐  │      │
-│   │  │ Transaction│  │   Color    │  │    Voting      │  │      │
-│   │  │  Selector  │  │  Markers   │  │    System      │  │      │
-│   │  └────────────┘  └────────────┘  └────────────────┘  │      │
-│   └──────────────────────────────────────────────────────┘      │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph CONSTELLATION["CONSTELLATION"]
+        subgraph Browsers["User Browsers (Validators)"]
+        end
+        subgraph Coordinator["Coordinator (Managed)"]
+        end
+        Browsers <-->|WebSocket| Coordinator
+        
+        Browsers -->|Vote| PoAI
+        Coordinator -->|Proposals| PoAI
+        
+        subgraph PoAI["PoAI Core"]
+            TX["Transaction Selector"]
+            CM["Color Markers"]
+            VS["Voting System"]
+        end
+    end
 ```
 
 ---
