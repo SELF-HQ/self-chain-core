@@ -9,6 +9,11 @@
 //! - **VotingSystem**: Decentralized voting for block selection
 //! - **ValidationCache**: Performance optimization through caching
 //!
+//! ## v1 Spec-Compliant Types
+//!
+//! The `v1` submodule contains spec-compliant consensus types that match
+//! `docs/POAI_SPECIFICATION.md`. See `v1::ConsensusConfig` for protocol constants.
+//!
 //! ## Usage
 //!
 //! ```rust,ignore
@@ -18,6 +23,8 @@
 //! let selector = TransactionSelector::new(config);
 //! let selected = selector.select_transactions(mempool)?;
 //! ```
+
+pub mod v1;
 
 pub mod cache;
 pub mod error;

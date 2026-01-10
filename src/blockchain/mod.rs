@@ -5,6 +5,13 @@
 //! - Transaction: Signed transaction with optional data payload
 //! - BlockHeader: Block metadata including AI validation threshold
 //! - BlockMeta: Additional block statistics
+//!
+//! ## v1 Spec-Compliant Types
+//!
+//! The `v1` submodule contains spec-compliant wire format types that match
+//! `docs/POAI_SPECIFICATION.md`. See `v1::BlockHeader` for the canonical format.
+
+pub mod v1;
 
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};

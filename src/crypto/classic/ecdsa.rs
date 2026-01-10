@@ -1,5 +1,5 @@
 use secp256k1::{Secp256k1, SecretKey, PublicKey, Message, ecdsa};
-use bitcoin_hashes::sha256;
+use bitcoin_hashes::{sha256, Hash};
 use hex::{encode, decode};
 // Need to use StdRng for compatibility with secp256k1
 use rand::rngs::StdRng;

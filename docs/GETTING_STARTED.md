@@ -4,7 +4,7 @@
 > 
 > This codebase is provided for **technical evaluation** by prospective constellation clients. You **cannot** deploy your own constellation without proper licensing from SELF Technology.
 > 
-> **To deploy a constellation:** Contact [constellation@self.technology](mailto:constellation@self.technology) for licensing and deployment support.
+> **To deploy a constellation:** Contact [info@theselfchain.com](mailto:info@theselfchain.com) for licensing and deployment support.
 
 This guide will help you understand the codebase, run examples, and evaluate PoAI consensus technology for potential constellation deployment.
 
@@ -283,7 +283,7 @@ SELF Technology manages production infrastructure for licensed constellations:
 
 **⚠️ You cannot deploy a constellation without proper licensing from SELF Technology.**
 
-**Contact:** [constellation@self.technology](mailto:constellation@self.technology)
+**Contact:** [info@theselfchain.com](mailto:info@theselfchain.com)
 
 ---
 
@@ -305,6 +305,6 @@ SELF Technology manages production infrastructure for licensed constellations:
 - **Cannot be redistributed** or modified without permission
 - **Patent pending** technology — unauthorized use prohibited
 
-**For licensing inquiries:** [constellation@self.technology](mailto:constellation@self.technology)
+**For licensing inquiries:** [info@theselfchain.com](mailto:info@theselfchain.com)
 
 *© 2026 SELF Technology. All rights reserved. Patent pending.*

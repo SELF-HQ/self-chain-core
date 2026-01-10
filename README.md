@@ -147,18 +147,39 @@ src/
 │   ├── validator.rs        # Color marker validation
 │   ├── transaction_selector.rs  # 20/20/50/10 algorithm
 │   ├── voting.rs           # Decentralized voting
-│   └── metrics.rs          # Prometheus instrumentation
+│   ├── metrics.rs          # Prometheus instrumentation
+│   └── v1/                 # Spec-compliant consensus types
+│       └── types.rs        # ConsensusConfig, RoundState, ValidatorInfo
 ├── crypto/                 # Cryptographic primitives
 │   ├── delegated_keys.rs   # Master/validator key hierarchy
 │   ├── classic/            # ECDSA, X25519, hashing
 │   ├── quantum/            # Kyber, SPHINCS+
 │   └── hybrid/             # Combined schemes
 ├── blockchain/             # Core types (Block, Transaction)
+│   ├── mod.rs              # Production types (WebSocket coordinator)
+│   └── v1/                 # Spec-compliant wire formats
+│       ├── block.rs        # BlockHeader with [u8;32] hashes
+│       ├── transaction.rs  # Transaction with point_price, nonce
+│       ├── vote.rs         # Vote, RankedVote types
+│       └── proposal.rs     # BlockProposal for competition model
 ├── node/                   # Node type implementations
 │   └── node_types.rs       # Validator, Builder, Coordinator
 └── examples/               # Reference implementations
     └── custom_rewards.rs   # Reward mechanism patterns
 ```
+
+### Production vs v1 Types
+
+| Aspect | Production (`blockchain/mod.rs`) | v1 Spec (`blockchain/v1/`) |
+|--------|----------------------------------|---------------------------|
+| `previous_hash` | `String` | `[u8; 32]` |
+| `point_price` | Not present | `u64` |
+| `chain_id` | Not present | `String` |
+| `nonce` | Not present | `u64` |
+| Hash algorithm | `DefaultHasher` | SHA-256 + domain separation |
+| Signature | `String` | `[u8; 64]` Ed25519 |
+
+The production types work with the current WebSocket-based coordinator. The v1 types match `docs/POAI_SPECIFICATION.md` and are used in the decentralized P2P consensus implementation.
 
 ---
 
@@ -169,6 +190,8 @@ src/
 | **[Getting Started](docs/GETTING_STARTED.md)** | Developer guide: setup, examples, integration checklist |
 | **[Constellation Overview](docs/CONSTELLATION_OVERVIEW.md)** | Configuration options, performance data, integration model, what we provide |
 | **[PoAI Specification](docs/POAI_SPECIFICATION.md)** | Complete consensus mechanism specification |
+| **[Browser Validator Architecture](docs/BROWSER_VALIDATOR_ARCHITECTURE.md)** | Zero-knowledge browser-based validator design |
+| **[Network Architecture](docs/NETWORK_ARCHITECTURE.md)** | Peer validation system and network layer |
 
 ---
 
@@ -205,8 +228,6 @@ SELF App (first constellation - https://self.app) has been live since January 1,
 | **Validators** | Browser-based, real users |
 | **Key Architecture** | Zero-knowledge (keys never leave device) |
 | **Reward Mechanism** | Prize pool (daily/weekly/monthly drawings) |
-| **Infrastructure** | Coordinator + Orchestrator on Fly.io (Amsterdam) |
-| **AI Oracle** | vLLM on H100 GPU (RunPod) for transaction selection |
 
 **Production Endpoints:**
 - Coordinator: ``
@@ -266,7 +287,7 @@ cargo run --example custom_rewards
 
 See the [Getting Started Guide](docs/GETTING_STARTED.md) for evaluation instructions and the [Constellation Overview](docs/CONSTELLATION_OVERVIEW.md) for integration details.
 
-**For constellation deployment:** Contact [constellation@self.technology](mailto:constellation@self.technology) for licensing and deployment support.
+**For constellation deployment:** Contact [info@theselfchain.com](mailto:info@theselfchain.com) for licensing and deployment support.
 
 ---
 

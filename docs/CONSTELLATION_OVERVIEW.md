@@ -381,7 +381,7 @@ Recovery Phrase (12/24 words)
 
 Ready to explore further?
 
-**Contact:** [constellation@self.technology](mailto:constellation@self.technology)
+**Contact:** [info@theselfchain.com](mailto:info@theselfchain.com)
 
 We'll schedule a technical deep-dive to discuss:
 - Your use case and requirements

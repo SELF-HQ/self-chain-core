@@ -100,7 +100,7 @@ impl RewardDistributor for DefaultPoAIRewards {
 // Example 2: Prize Pool Rewards
 // =============================================================================
 
-use rand::seq::SliceRandom;
+use rand::seq::IndexedRandom;
 
 pub struct PrizePoolRewards {
     pub daily_pool: u64,
@@ -111,7 +111,7 @@ pub struct PrizePoolRewards {
 impl PrizePoolRewards {
     /// Select a random winner from eligible participants
     fn select_winner<'a>(&self, participants: &'a [VoterInfo]) -> Option<&'a VoterInfo> {
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         participants.choose(&mut rng)
     }
 }
