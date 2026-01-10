@@ -1,4 +1,4 @@
-# <img src="SELF Chain Star Logo White.png" height="80" alt="SELF Chain"> SELF Chain
+# <img src="SELF Chain Star Logo White.png" height="80" align="middle" alt="SELF Chain"> SELF Chain
 
 ### Production-Proven Proof-of-AI Consensus
 
