@@ -840,7 +840,6 @@ SELF Chain implements browser-based validators (not server-based):
 ### Production Status
 
 - **Live since:** January 1, 2026
-- **Coordinator:** ``
 - **Consensus rounds:** 60 seconds
 - **Validators:** Browser-based with real users
 
