@@ -1,4 +1,4 @@
-# SELF Chain Core
+# SELF Chain
 
 ### Production-Proven Proof-of-AI Consensus
 
