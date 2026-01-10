@@ -305,7 +305,7 @@ Timeline depends entirely on your specification — from weeks for standard conf
 
 **Can we see a demo?**
 
-Yes. Contact us for a technical demonstration and deep-dive with our engineering team. SELF App is live at https://self.app — you can see PoAI consensus in action.
+Yes. Contact us for a technical demonstration and deep-dive with our engineering team. SELF App is live at https://self.app — you can see PoAI consensus in action if you create an account.
 
 **Has this been audited?**
 
