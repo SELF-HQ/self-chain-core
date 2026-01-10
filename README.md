@@ -231,10 +231,6 @@ SELF App (first constellation - https://self.app) has been live since January 1,
 | **Key Architecture** | Zero-knowledge (keys never leave device) |
 | **Reward Mechanism** | Prize pool (daily/weekly/monthly drawings) |
 
-**Production Endpoints:**
-- Coordinator: ``
-- Orchestrator: ``
-
 ---
 
 ## Security
