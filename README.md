@@ -164,8 +164,10 @@ src/
 │       └── proposal.rs     # BlockProposal for competition model
 ├── node/                   # Node type implementations
 │   └── node_types.rs       # Validator, Builder, Coordinator
-└── examples/               # Reference implementations
-    └── custom_rewards.rs   # Reward mechanism patterns
+└── lib.rs                  # Crate root with re-exports
+
+examples/
+└── custom_rewards.rs       # Reward mechanism patterns
 ```
 
 ### Production vs v1 Types
@@ -255,39 +257,36 @@ SELF App (first constellation - https://self.app) has been live since January 1,
 
 ---
 
-## Getting Started
+## Technical Evaluation
 
-### For Developers (Evaluation Only)
+### Code Review
 
-**⚠️ This repository is for EVALUATION ONLY. You cannot deploy a constellation without proper licensing from SELF Technology.**
+This repository demonstrates working implementations of core PoAI mechanisms:
 
-This repository contains working implementations of core PoAI mechanisms for technical evaluation:
-
-```bash
-# Clone the repository
-git clone https://github.com/self-technology/self-chain-core.git
-cd self-chain-core
-
-# Build the project
-cargo build
-
-# Run tests
-cargo test
-
-# Run examples
-cargo run --example custom_rewards
-```
-
-**Key Components:**
-- `src/consensus/` — PoAI consensus (transaction selection, color markers, voting)
-- `src/crypto/` — Hybrid cryptography (classic + post-quantum)
-- `src/blockchain/` — Core blockchain types (Block, Transaction)
-- `src/node/` — Node type implementations (Validator, Builder, Coordinator)
+- `src/consensus/` — Transaction selection (20/20/50/10), color marker validation, voting
+- `src/consensus/v1/` — Spec-compliant consensus types matching the protocol specification
+- `src/crypto/` — Hybrid cryptography (ECDSA, X25519, Kyber-1024, SPHINCS+)
+- `src/blockchain/v1/` — Spec-compliant wire formats with proper hashing and signatures
 - `examples/` — Reference implementations for custom reward mechanisms
 
-See the [Getting Started Guide](docs/GETTING_STARTED.md) for evaluation instructions and the [Constellation Overview](docs/CONSTELLATION_OVERVIEW.md) for integration details.
+### Verify Implementations
 
-**For constellation deployment:** Contact [info@theselfchain.com](mailto:info@theselfchain.com) for licensing and deployment support.
+To verify the implementations are functional:
+
+```bash
+cargo test
+```
+
+This runs 65 unit tests covering:
+- 20/20/50/10 transaction selection algorithm
+- Color marker hex calculation
+- Delegated key derivation (master → validator)
+- Post-quantum cryptography (Kyber, SPHINCS+)
+- Spec-compliant wire format types
+
+See the [Getting Started Guide](docs/GETTING_STARTED.md) for detailed evaluation guidance and the [Constellation Overview](docs/CONSTELLATION_OVERVIEW.md) for integration details.
+
+**For constellation deployment:** Contact [info@theselfchain.com](mailto:info@theselfchain.com) for licensing and support.
 
 ---
 
@@ -317,7 +316,7 @@ Cryptographic audit is in progress. Preliminary results and methodology availabl
 
 Interested in launching a constellation?
 
-**Contact:** [info@self.chain](mailto:info@self.chain)
+**Contact:** [info@theselfchain.com](mailto:info@theselfchain.com)
 
 We provide:
 - Full technology licensing
